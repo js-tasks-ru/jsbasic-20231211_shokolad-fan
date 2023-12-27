@@ -9,8 +9,8 @@ function print(text) {
  * Эту функцию нужно поменять так,
  * чтобы функция sayHello работала корректно
  */
-function isValid(name = '') {
-  return typeof name === 'string' && name.replaceAll(' ', '').length === name.length && name.length >= 4;
+function isValid(name) {
+  // ваш код...
 }
 
 
