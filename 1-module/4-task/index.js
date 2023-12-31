@@ -1,5 +1,5 @@
 function checkSpam(str = '') {
-  // Ваш код
+  //  код
 }
 
 
