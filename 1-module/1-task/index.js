@@ -20,6 +20,3 @@ function factorial(n = 0) {
   }
   return result;
 }
-
-
-console.log('factorial: ', factorial(5));
