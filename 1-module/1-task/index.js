@@ -8,7 +8,7 @@ function factorial(n = 0) {
     return 1;
   }
 
-  let result = 0;
+  let result = 1;
 
   // Почему изначально пишем let i = 2?
   // Потому что умножение будет начинаться с числа 2;
@@ -20,3 +20,6 @@ function factorial(n = 0) {
   }
   return result;
 }
+
+
+console.log('factorial: ', factorial(5));
