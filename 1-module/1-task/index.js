@@ -1,4 +1,4 @@
-function factorial(n) {
+function factorial(n = 0) {
   // Проверка на число || Проверка меньше ли значение переменной || Проверка на цельное число
   if (typeof n !== 'number' || n < 0 || !Number.isInteger(n)) {
     throw new Error('Укажите целое неотрицательное число');

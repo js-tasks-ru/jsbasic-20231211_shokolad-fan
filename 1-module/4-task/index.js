@@ -1,4 +1,5 @@
 function checkSpam(str = '') {
+
   if (typeof str !== 'string' || !str) {
     throw new Error('Передан не строковый аргумент');
   }
