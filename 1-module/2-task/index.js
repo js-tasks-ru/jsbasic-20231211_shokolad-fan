@@ -44,11 +44,6 @@ function isValid(name = '') {
   return name.length >= 4;
 }
 
-console.log('isValid', isValid('')); // false
-console.log('isValid', isValid('Ilia Burlak')); // false
-console.log('isValid', isValid('Ili')); // false
-console.log('isValid', isValid('IliaBurlak')); // true
-
 
 function sayHello() {
   let userName = prompt('Введите ваше имя');

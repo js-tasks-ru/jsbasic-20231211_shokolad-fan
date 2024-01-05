@@ -15,6 +15,3 @@ function isEmpty(obj = false) {
   }
   return true;
 }
-
-// let schedule = {};
-// console.log('isEmpty: ', isEmpty(schedule));

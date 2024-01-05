@@ -8,8 +8,6 @@ function factorial(n = 0) {
     return 1;
   }
 
-  // Почему изначально пишем result 1?
-  // Потому что при умножении на 0, результат будет равен 0;
   let result = 1;
 
   // Почему изначально пишем let i = 2?
@@ -22,8 +20,3 @@ function factorial(n = 0) {
   }
   return result;
 }
-
-
-
-console.log(factorial(5)); // 120
-// 1 * 2 * 3 * 4 * 5

@@ -24,10 +24,3 @@ function checkSpam(str = '') {
 
   return false;
 }
-
-
-
-// let counter1 = 1;
-// let result = counter1++;
-// console.log('result: ', result); // result = 1,
-// console.log('counter1: ', counter1); // counter = 2
