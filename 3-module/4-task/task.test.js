@@ -276,6 +276,7 @@ const data = [
 ];
 /* eslint-enable */
 
+
 describe('3-module-4-task', () => {
   it('для пользователей до 30 лет должна вывести строку с зарплатами', () => {
     expect(showSalary(data, 30)).toEqual('Golden Branch, $1,825.65\nDuncan Randall, $1,490.15');
