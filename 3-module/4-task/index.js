@@ -11,13 +11,16 @@ function showSalary(users = [], age = 0) {
   for (let i = 0; i < users.length; i++) {
 
     if (users[i].age <= age) {
-      result += `${users[i].name}, ${users[i].balance}\n`;
+      if (hasValidUser) {
+        result += '\n';
+      }
+      result += `${users[i].name}, ${users[i].balance}`;
       hasValidUser = true;
     }
 
   }
 
-  return hasValidUser ? result.trim() : 'Not Result';
-
-  // return users.filter((el) => el.age <= age).map((el) => `${el.name}, ${el.balance}`).join('\n');
+  return hasValidUser ? result : 'Not Result';
+// return users.filter((el) => el.age <= age).map((el) => `${el.name}, ${el.balance}`).join('\n');
 }
+
