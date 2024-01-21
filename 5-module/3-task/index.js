@@ -20,8 +20,6 @@ function initCarousel() {
 
   carouseArrowAll.addEventListener('click', {
     handleEvent(e) {
-      console.log('e: ', e.target.closest('DIV'));
-
       let target = e.target.closest('DIV');
 
       if (target) {
