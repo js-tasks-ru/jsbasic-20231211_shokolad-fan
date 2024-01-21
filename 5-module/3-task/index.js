@@ -3,6 +3,9 @@ function initCarousel() {
   let carouselArrowLeft = document.querySelector('.carousel__arrow_left');
   let carouselArrowRight = document.querySelector('.carousel__arrow_right');
 
+  // carouseArrowAll
+  let carouseArrowAll = document.querySelector('.carousel');
+
   // carousel
   let carousel = document.querySelector('.carousel__inner');
   let carouselSlide = document.querySelectorAll('.carousel__slide');
@@ -12,24 +15,29 @@ function initCarousel() {
 
   // carouselWidth
   let carouselWidth = carousel.offsetWidth;
-  // Или через clientWidth
-  // let carouselWidth = carouselSlide[0].clientWidth;
-
 
   updateButtonVisibility();
 
-  carouselArrowLeft.addEventListener('click', function () {
-    counter--;
-    carousel.style.transform = 'translateX(' + `${-carouselWidth * counter}px)`;
+  carouseArrowAll.addEventListener('click', {
+    handleEvent(e) {
+      console.log('e: ', e.target.closest('DIV'));
 
-    updateButtonVisibility();
-  });
+      let target = e.target.closest('DIV');
 
-  carouselArrowRight.addEventListener('click', function () {
-    counter++;
-    carousel.style.transform = 'translateX(' + `${-carouselWidth * counter}px)`;
+      if (target) {
 
-    updateButtonVisibility();
+        if (target.classList.contains('carousel__arrow_left')) {
+          counter--;
+          carousel.style.transform = 'translateX(' + `${-carouselWidth * counter}px)`;
+
+        } else if (target.classList.contains('carousel__arrow_right')) {
+          counter++;
+          carousel.style.transform = 'translateX(' + `${-carouselWidth * counter}px)`;
+        }
+
+        updateButtonVisibility();
+      }
+    }
   });
 
 
