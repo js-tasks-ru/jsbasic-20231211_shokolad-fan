@@ -3,6 +3,9 @@ function initCarousel() {
   let carouselArrowLeft = document.querySelector('.carousel__arrow_left');
   let carouselArrowRight = document.querySelector('.carousel__arrow_right');
 
+  // carouseArrowAll
+  let carouseArrowAll = document.querySelector('.carousel');
+
   // carousel
   let carousel = document.querySelector('.carousel__inner');
   let carouselSlide = document.querySelectorAll('.carousel__slide');
@@ -12,25 +15,28 @@ function initCarousel() {
 
   // carouselWidth
   let carouselWidth = carousel.offsetWidth;
-  // Или через clientWidth
-  // let carouselWidth = carouselSlide[0].clientWidth;
-
 
   updateButtonVisibility();
 
-  carouselArrowLeft.addEventListener('click', function () {
-    counter--;
-    carousel.style.transform = 'translateX(' + `${-carouselWidth * counter}px)`;
+  carouseArrowAll.addEventListener('click', {
+    handleEvent(e) {
+      let target = e.target.closest('DIV');
 
-    updateButtonVisibility();
-  });
+      if (target) {
 
-  carouselArrowRight.addEventListener('click', function () {
-    counter++;
-    carousel.style.transform = 'translateX(' + `${-carouselWidth * counter}px)`;
+        if (target.classList.contains('carousel__arrow_left')) {
+          counter--;
+          carousel.style.transform = 'translateX(' + `${-carouselWidth * counter}px)`;
 
-    updateButtonVisibility();
-  });
+        } else if (target.classList.contains('carousel__arrow_right')) {
+          counter++;
+          carousel.style.transform = 'translateX(' + `${-carouselWidth * counter}px)`;
+        }
+
+        updateButtonVisibility();
+      }
+    }
+  },);
 
 
   function updateButtonVisibility() {
