@@ -36,7 +36,7 @@ function initCarousel() {
         updateButtonVisibility();
       }
     }
-  });
+  },);
 
 
   function updateButtonVisibility() {
