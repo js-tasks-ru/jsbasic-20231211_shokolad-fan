@@ -119,7 +119,7 @@ describe('7-module-2-task', () => {
     beforeEach(() => {
       modal.open();
 
-      clickEvent = new MouseEvent('click', { bubbles: true });
+      clickEvent = new MouseEvent('click', {bubbles: true});
       closeButton = document.body.querySelector('.modal .modal__close');
     });
 
@@ -159,7 +159,7 @@ describe('7-module-2-task', () => {
       let escKeyDownEvent;
 
       beforeEach(() => {
-        escKeyDownEvent = new KeyboardEvent('keydown', { code: 'Escape', key: 'Escape', bubbles: true });
+        escKeyDownEvent = new KeyboardEvent('keydown', {code: 'Escape', key: 'Escape', bubbles: true});
       });
 
       it('вёрстка модального окна должна удаляться из body', () => {
@@ -183,7 +183,7 @@ describe('7-module-2-task', () => {
       let spaceButtonKeyDownEvent;
 
       beforeEach(() => {
-        spaceButtonKeyDownEvent = new KeyboardEvent('keydown', { code: ' ', key: 'Space', bubbles: true });
+        spaceButtonKeyDownEvent = new KeyboardEvent('keydown', {code: ' ', key: 'Space', bubbles: true});
       });
 
       it('вёрстка модального окна НЕ должна удаляться из body', () => {
