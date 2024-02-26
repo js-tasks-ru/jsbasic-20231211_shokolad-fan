@@ -3,85 +3,108 @@ import createElement from '../../assets/lib/create-element.js';
 export default class Carousel {
   constructor(slides) {
     this.slides = slides;
-    this.currentSlideIndex = 0;
-    this.render();
+    this.counter = 0;
+    this.elem = this.createCarouse();
+    this.hiddenCarouselButtons();
+    this.customEvent();
   }
 
-  render() {
-    this.elem = createElement(`
-      <div class="carousel">
-        <div class="carousel__arrow carousel__arrow_left" style="display: none">
-          <img src="/assets/images/icons/angle-left-icon.svg" alt="icon">
-        </div>
-        <div class="carousel__inner">
-          ${this.slides.map(slide => this.createSlide(slide)).join('')}
-        </div>
-        <div class="carousel__arrow carousel__arrow_right">
-          <img src="/assets/images/icons/angle-right-icon.svg" alt="icon">
-        </div>
-      </div>
-    `);
+  createCarouse() {
+    let carousel = createElement('<div class="carousel"></div>');
+    let carouselInner = createElement('<div class="carousel__inner"></div>');
 
-    this.carouselInner = this.elem.querySelector('.carousel__inner');
-    this.arrowLeft = this.elem.querySelector('.carousel__arrow_left');
-    this.arrowRight = this.elem.querySelector('.carousel__arrow_right');
-
-    this.elem.addEventListener('click', (event) => {
-      if (event.target.closest('.carousel__button')) {
-        this.emitProductAddEvent();
-      }
-      if (event.target.closest('.carousel__arrow_left')) {
-        this.prevSlide();
-      }
-      if (event.target.closest('.carousel__arrow_right')) {
-        this.nextSlide();
-      }
+    this.slides.forEach(el => {
+      let slide = createElement(`
+        <div class="carousel__slide" data-id="${el.id}">
+          <img src="/assets/images/carousel/${el.image}" class="carousel__img" alt="slide">
+          <div class="carousel__caption">
+            <span class="carousel__price">€${el.price.toFixed(2)}</span>
+            <div class="carousel__title">${el.name}</div>
+            <button type="button" class="carousel__button">
+              <img src="/assets/images/icons/plus-icon.svg" alt="icon">
+            </button>
+          </div>
+        </div>
+      `);
+      carouselInner.appendChild(slide);
     });
 
-    this.updateCarousel();
+
+    let carouseArrowLeft = createElement(`
+            <div class="carousel__arrow carousel__arrow_left">
+                <img src="/assets/images/icons/angle-left-icon.svg" alt="icon">
+            </div>`
+    );
+    let carouseArrowRight = createElement(`
+            <div class="carousel__arrow carousel__arrow_right">
+                <img src="/assets/images/icons/angle-icon.svg" alt="icon">
+            </div>`
+    );
+
+
+    carousel.addEventListener('click', function (e) {
+      let arrowRight = e.target.closest('.carousel__arrow_right');
+      let arrowLeft = e.target.closest('.carousel__arrow_left');
+      let carouselInner = carousel.querySelector('.carousel__inner');
+      let carouselInnerWidth = carouselInner.offsetWidth;
+
+
+      if (arrowRight || arrowLeft) {
+        this.counter += arrowRight ? 1 : -1;
+        carouselInner.style.transform = `translateX(${-carouselInnerWidth * this.counter}px)`;
+
+        this.hiddenCarouselButtons();
+        this.customEvent();
+      }
+
+    }.bind(this));
+
+
+    carousel.appendChild(carouseArrowLeft);
+    carousel.appendChild(carouseArrowRight);
+    carousel.appendChild(carouselInner);
+    return carousel;
   }
 
-  createSlide(slide) {
-    return `
-      <div class="carousel__slide" data-id="${slide.id}">
-        <img src="/assets/images/carousel/${slide.image}" class="carousel__img" alt="slide">
-        <div class="carousel__caption">
-          <span class="carousel__price">€${slide.price.toFixed(2)}</span>
-          <div class="carousel__title">${slide.name}</div>
-          <button type="button" class="carousel__button">
-            <img src="/assets/images/icons/plus-icon.svg" alt="icon">
-          </button>
-        </div>
-      </div>
-    `;
+
+  hiddenCarouselButtons() {
+    let carouselLength = this.slides.length;
+    let carouseArrowLeft = this.elem.querySelector('.carousel__arrow_left');
+    let carouseArrowRight = this.elem.querySelector('.carousel__arrow_right');
+
+    this.counter === 0
+      ? carouseArrowLeft.style.display = 'none'
+      : carouseArrowLeft.style.display = '';
+
+    this.counter === carouselLength - 1
+      ? carouseArrowRight.style.display = 'none'
+      : carouseArrowRight.style.display = '';
   }
 
-  prevSlide() {
-    this.currentSlideIndex = (this.currentSlideIndex - 1 + this.slides.length) % this.slides.length;
-    this.updateCarousel();
-  }
+  customEvent() {
+    let btns = this.elem.querySelectorAll('.carousel__button');
 
-  nextSlide() {
-    this.currentSlideIndex = (this.currentSlideIndex + 1) % this.slides.length;
-    this.updateCarousel();
-  }
+    btns.forEach(btn => {
 
-  updateCarousel() {
-    const slideWidth = this.carouselInner.offsetWidth;
-    const translateX = -slideWidth * this.currentSlideIndex;
+      btn.addEventListener('click', function (e) {
+        let BTN = e.target.closest('BUTTON');
 
-    this.carouselInner.style.transform = `translateX(${translateX}px)`;
+        if (BTN) {
+          let currentSlide = BTN.closest('.carousel__slide');
+          if (currentSlide) {
+            let dataId = currentSlide.dataset.id;
 
-    this.arrowLeft.style.display = this.currentSlideIndex === 0 ? 'none' : 'flex';
-    this.arrowRight.style.display = this.currentSlideIndex === this.slides.length - 1 ? 'none' : 'flex';
-  }
+            let myEvent = new CustomEvent('product-add', {
+              detail: dataId,
+              bubbles: true
+            });
 
-  emitProductAddEvent() {
-    const slideId = this.slides[this.currentSlideIndex].id;
-    const event = new CustomEvent('product-add', {
-      detail: slideId,
-      bubbles: true,
+            this.elem.dispatchEvent(myEvent);
+          }
+        }
+
+      }.bind(this));
+
     });
-    this.elem.dispatchEvent(event);
   }
 }
