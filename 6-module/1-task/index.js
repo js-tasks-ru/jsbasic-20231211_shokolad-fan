@@ -15,51 +15,58 @@
 
 export default class UserTable {
   constructor(rows) {
-    this.elem = document.createElement('table');
-    this.createHeader();
-    this.createBody(rows);
+    this.createTable();
+    this.createThead();
+    this.createTbody(rows);
   }
 
-  createHeader() {
+
+  createTable() {
+    this.elem = document.createElement('table');
+  }
+
+  createThead() {
     let thead = document.createElement('thead');
     let tr = document.createElement('tr');
 
-    let thElems = ['Имя', 'Возраст', 'Зарплата', 'Город', ''];
+    let arrTh = ['Имя', 'Возраст', 'Зарплата', 'Город', ''];
+    for (let elTh of arrTh) {
 
-    thElems.forEach(elem => {
-      let th = document.createElement('th');
-      th.textContent = elem;
-      tr.appendChild(th);
-    });
+      tr.insertAdjacentHTML('beforeend', `<th>${elTh}</th>`);
 
-    thead.appendChild(tr);
+      thead.append(tr);
+    }
     this.elem.appendChild(thead);
   }
 
-  createBody(rows) {
+  createTbody(rows) {
     let tbody = document.createElement('tbody');
 
-    rows.forEach((el) => {
+    for (let {name, age, salary, city} of rows) {
+      let rowData = [name, age, salary, city];
       let tr = document.createElement('tr');
 
-      Object.entries(el).forEach(([key, value]) => {
-        let td = document.createElement('td');
-        td.textContent = value;
-        tr.appendChild(td);
+      rowData.forEach(value => {
+        tr.insertAdjacentHTML('beforeend', `<td>${value}</td>`);
       });
 
-      let td = document.createElement('td');
-      let button = document.createElement('button');
-      button.textContent = 'Х';
-      button.addEventListener('click', () => {
-        tr.remove();
-      });
-      td.appendChild(button);
-      tr.appendChild(td);
 
-      tbody.appendChild(tr);
-    });
+      tr.insertAdjacentHTML('beforeend', `<td></td>`);
+      let deleteBtn = document.createElement('button');
+      deleteBtn.textContent = 'X';
+      deleteBtn.addEventListener('click', () => {
+        tbody.removeChild(tr);
+      });
+
+      tr.lastElementChild.appendChild(deleteBtn);
+      tbody.append(tr);
+    }
+
 
     this.elem.appendChild(tbody);
   }
+
+
 }
+
+
